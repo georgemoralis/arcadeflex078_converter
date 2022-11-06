@@ -15,7 +15,7 @@ Tile/sprite priority system (for the Kung Fu Master M62 board):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.vidhrdw;
 

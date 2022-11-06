@@ -27,7 +27,7 @@ WHO AM I?      (In place of "ARIES ELECA")
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

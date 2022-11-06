@@ -102,7 +102,7 @@ z:      xxxx address bits a19 .. a16 for memory accesses with a15 1 ?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.cpu.m6502;
 

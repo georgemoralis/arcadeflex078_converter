@@ -91,7 +91,7 @@ FG-3J ROM-J 507KA0301P04       Rev:1.3
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

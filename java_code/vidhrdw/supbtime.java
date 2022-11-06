@@ -14,7 +14,7 @@ End sequence uses rowscroll '98 c0' on pf1 (jmp to 1d61a)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.vidhrdw;
 

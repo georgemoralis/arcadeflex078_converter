@@ -162,7 +162,7 @@ unsigned g65816_dasm(char *buffer, unsigned pc);
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.cpu.g65816;
 

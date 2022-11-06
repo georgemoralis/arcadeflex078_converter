@@ -18,7 +18,7 @@ author (Karl Stenerud) at karl@higashiyama-unet.ocn.ne.jp.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.cpu.spc700;
 

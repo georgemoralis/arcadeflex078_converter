@@ -36,7 +36,7 @@ a small kid and even with a dog! And remember, Winners don't use Drugs ;)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

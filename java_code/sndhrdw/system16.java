@@ -1,7 +1,7 @@
 // system 16 - 7751 emulation, based on monster bash code.
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.sndhrdw;
 

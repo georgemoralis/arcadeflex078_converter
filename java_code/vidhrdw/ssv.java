@@ -131,7 +131,7 @@ Note: press Z to show some info on each sprite (debug builds only)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.vidhrdw;
 

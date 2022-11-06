@@ -63,7 +63,7 @@ IO ports and memory map changes. Dip switches differ too.
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

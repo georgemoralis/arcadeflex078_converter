@@ -91,7 +91,7 @@ sol divide doesn't seem to make much use of tilemaps at all, it uses them to fad
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.vidhrdw;
 

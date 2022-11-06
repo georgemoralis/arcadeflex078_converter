@@ -82,7 +82,7 @@ EB26IC73.BIN	27C240		/  Main Program
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

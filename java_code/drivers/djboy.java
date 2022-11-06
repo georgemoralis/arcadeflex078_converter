@@ -66,7 +66,7 @@ BS07    4464 4464     BS-64           BS-200
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

@@ -44,7 +44,7 @@ ROMs 6A, 7A, 8A, 9A: 2764
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.drivers;
 

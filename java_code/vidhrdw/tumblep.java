@@ -15,7 +15,7 @@ to switch between 8*8 tiles and 16*16 tiles.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.04
+ * using automatic conversion tool v0.0.5
  */ 
 package arcadeflex.v078.vidhrdw;
 
