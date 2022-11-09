@@ -585,11 +585,11 @@ public class terracre
 		{ 0 }
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2,	/* 2 channels */
-		{ 50, 50 }
-	};
+		new int[] { 50, 50 }
+	);
 	
 	static MACHINE_DRIVER_START( amazon )
 		MDRV_CPU_ADD(M68000, 8000000 )

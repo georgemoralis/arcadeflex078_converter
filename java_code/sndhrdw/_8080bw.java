@@ -717,11 +717,11 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	struct DACinterface sheriff_dac_interface =
-	{
+	static DACinterface sheriff_dac_interface = new DACinterface
+	(
 		1,
-		{ 50 }
-	};
+		new int[] { 50 }
+	);
 	
 	struct SN76477interface sheriff_sn76477_interface =
 	{
@@ -1198,11 +1198,11 @@ public class _8080bw
 		{ RES_K(220)   }		/* 24  oneshot_res		 */
 	};
 	
-	struct DACinterface schaser_dac_interface =
-	{
+	static DACinterface schaser_dac_interface = new DACinterface
+	(
 		1,
-		{ 50 }
-	};
+		new int[] { 50 }
+	);
 	
 	struct CustomSound_interface schaser_custom_interface =
 	{

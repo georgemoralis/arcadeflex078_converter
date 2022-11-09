@@ -549,11 +549,11 @@ public class flstory
 		{ 100 }	/* ? */
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 20 }
-	};
+		new int[] { 20 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( flstory )

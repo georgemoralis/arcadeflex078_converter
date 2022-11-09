@@ -563,11 +563,11 @@ public class galivan
 		{ 100 }
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2,
-		{ 50, 50 }
-	};
+		new int[] { 50, 50 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( galivan )

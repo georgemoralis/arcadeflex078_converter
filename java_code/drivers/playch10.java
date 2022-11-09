@@ -726,11 +726,11 @@ public class playch10
 		{ 50 },
 	};
 	
-	static struct DACinterface nes_dac_interface =
-	{
+	static DACinterface nes_dac_interface = new DACinterface
+	(
 		1,
-		{ 50 },
-	};
+		new int[] { 50 },
+	);
 	
 	
 	static MACHINE_DRIVER_START( playch10 )

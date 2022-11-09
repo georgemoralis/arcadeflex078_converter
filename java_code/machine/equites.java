@@ -427,11 +427,11 @@ public class equites
 		{ 0 }
 	);
 	
-	struct DACinterface equites_dacintf =
-	{
+	static DACinterface equites_dacintf = new DACinterface
+	(
 		2,
-		{ 75, 75 }
-	};
+		new int[] { 75, 75 }
+	);
 	
 	/******************************************************************************/
 }

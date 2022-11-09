@@ -1399,11 +1399,11 @@ public class scramble
 		new WriteHandlerPtr[] { 0, 0 }
 	);
 	
-	static struct DACinterface sfx_dac_interface =
-	{
+	static DACinterface sfx_dac_interface = new DACinterface
+	(
 		1,	/* 1 channel */
-		{ 100 },
-	};
+		new int[] { 100 },
+	);
 	
 	
 	static MACHINE_DRIVER_START( scramble )

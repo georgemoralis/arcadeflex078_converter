@@ -217,11 +217,11 @@ public class mogura
 		new GfxDecodeInfo( -1 )
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2,
-		{ MIXER(50, MIXER_PAN_LEFT), MIXER(50, MIXER_PAN_RIGHT) }
-	};
+		new int[] { MIXER(50, MIXER_PAN_LEFT), MIXER(50, MIXER_PAN_RIGHT) }
+	);
 	
 	static MACHINE_DRIVER_START( mogura )
 		/* basic machine hardware */

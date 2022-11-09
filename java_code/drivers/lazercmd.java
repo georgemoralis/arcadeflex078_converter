@@ -668,11 +668,11 @@ public class lazercmd
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
 	} };
 	
-	static struct DACinterface lazercmd_DAC_interface =
-	{
+	static DACinterface lazercmd_DAC_interface = new DACinterface
+	(
 		1,
-		{ 100 }
-	};
+		new int[] { 100 }
+	);
 	
 	static MACHINE_DRIVER_START( lazercmd )
 	

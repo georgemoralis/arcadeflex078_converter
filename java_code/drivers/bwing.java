@@ -407,11 +407,11 @@ public class bwing
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 10 }
-	};
+		new int[] { 10 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( bwing )

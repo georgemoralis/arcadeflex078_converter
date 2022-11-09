@@ -414,11 +414,11 @@ public class finalizr
 		{ 75 }
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 65 }
-	};
+		new int[] { 65 }
+	);
 	
 	
 	

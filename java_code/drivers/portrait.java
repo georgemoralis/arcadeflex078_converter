@@ -240,11 +240,11 @@ public class portrait
 		PORT_DIPSETTING(    0x02, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 100 }
-	};
+		new int[] { 100 }
+	);
 	
 	static MACHINE_DRIVER_START( portrait )
 		MDRV_CPU_ADD(Z80, 4000000)     /* 4 MHz ? */

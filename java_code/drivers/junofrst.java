@@ -356,11 +356,11 @@ public class junofrst
 		new WriteHandlerPtr[] { junofrst_portB_w }
 	);
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 50 }
-	};
+		new int[] { 50 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( junofrst )

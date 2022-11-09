@@ -1934,11 +1934,11 @@ public class alpha68k
 	} };
 	//ZT
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 75 }
-	};
+		new int[] { 75 }
+	);
 	
 	public static InterruptHandlerPtr kyros_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)

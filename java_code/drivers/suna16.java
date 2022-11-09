@@ -603,12 +603,12 @@ public class suna16
 		{ 0 }		/* port write handler */
 	};
 	
-	static struct DACinterface bssoccer_dac_interface =
-	{
+	static DACinterface bssoccer_dac_interface = new DACinterface
+	(
 		4,
-		{	MIXER(40,MIXER_PAN_LEFT), MIXER(40,MIXER_PAN_RIGHT),
+		new int[] {	MIXER(40,MIXER_PAN_LEFT), MIXER(40,MIXER_PAN_RIGHT),
 			MIXER(40,MIXER_PAN_LEFT), MIXER(40,MIXER_PAN_RIGHT)	}
-	};
+	);
 	
 	public static InterruptHandlerPtr bssoccer_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
@@ -674,11 +674,11 @@ public class suna16
 		{ 0 }		/* port write handler */
 	};
 	
-	static struct DACinterface uballoon_dac_interface =
-	{
+	static DACinterface uballoon_dac_interface = new DACinterface
+	(
 		2,
-		{ MIXER(50,MIXER_PAN_LEFT), MIXER(50,MIXER_PAN_RIGHT) }
-	};
+		new int[] { MIXER(50,MIXER_PAN_LEFT), MIXER(50,MIXER_PAN_RIGHT) }
+	);
 	
 	static MACHINE_DRIVER_START( uballoon )
 	

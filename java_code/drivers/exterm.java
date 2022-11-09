@@ -439,11 +439,11 @@ public class exterm
 	 *
 	 *************************************/
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2, 			/* 2 channels on 1 chip */
-		{ 40, 40 },
-	};
+		new int[] { 40, 40 },
+	);
 	
 	static struct YM2151interface ym2151_interface =
 	{

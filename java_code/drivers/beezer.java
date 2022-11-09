@@ -95,11 +95,11 @@ public class beezer
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 100 }
-	};
+		new int[] { 100 }
+	);
 	
 	static MACHINE_DRIVER_START( beezer )
 	

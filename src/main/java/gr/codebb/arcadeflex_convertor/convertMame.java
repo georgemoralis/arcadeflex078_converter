@@ -33,6 +33,7 @@ public class convertMame {
     static final int AY8910INTF = 20;
     static final int SAMPLESINTF = 21;
     static final int TILEINFO = 22;
+    static final int DACINTF = 19;
 
     public static void Convert() {
         Convertor.inpos = 0;//position of pointer inside the buffers
@@ -813,7 +814,7 @@ public class convertMame {
                     }
                     if (!sUtil.getToken("struct")) //static but not static struct
                     {
-                         if (sUtil.getToken("void")) {
+                        if (sUtil.getToken("void")) {
 
                             sUtil.skipSpace();
                             Convertor.token[0] = sUtil.parseToken();
@@ -823,8 +824,7 @@ public class convertMame {
                                 break;
                             }
                             sUtil.skipSpace();
-                            if(sUtil.getToken("int tile_index"))
-                            {
+                            if (sUtil.getToken("int tile_index")) {
                                 sUtil.skipSpace();
                                 if (sUtil.parseChar() != ')') {
                                     Convertor.inpos = i;
@@ -841,7 +841,7 @@ public class convertMame {
                                     continue;
                                 }
                             }
-                         }
+                        }
                         if (sUtil.getToken("VIDEO_EOF")) {
                             sUtil.skipSpace();
                             if (sUtil.parseChar() != '(') {
@@ -1151,6 +1151,20 @@ public class convertMame {
                                 continue;
                             }
                         }
+                        if (sUtil.getToken("DACinterface")) {
+                            sUtil.skipSpace();
+                            Convertor.token[0] = sUtil.parseToken();
+                            sUtil.skipSpace();
+                            if (sUtil.parseChar() != '=') {
+                                Convertor.inpos = i;
+                            } else {
+                                sUtil.skipSpace();
+                                sUtil.putString("static DACinterface " + Convertor.token[0] + " = new DACinterface");
+                                type = DACINTF;
+                                i3 = -1;
+                                continue;
+                            }
+                        }
                     }
                     Convertor.inpos = i;
                 }
@@ -1331,7 +1345,7 @@ public class convertMame {
                 }
                 break;
                 case ',': {
-                    if (type == GFXLAYOUT || type == GFXDECODE || type == AY8910INTF) {
+                    if (type == GFXLAYOUT || type == GFXDECODE || type == AY8910INTF || type == DACINTF) {
                         if ((type != -1)) {
                             if (i3 != -1) {
                                 insideagk[i3] += 1;
@@ -1441,6 +1455,20 @@ public class convertMame {
                             continue;
                         }
                     }
+                    if (type == DACINTF) {
+                        i3++;
+                        insideagk[i3] = 0;
+                        if (i3 == 0) {
+                            Convertor.outbuf[(Convertor.outpos++)] = '(';
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                        if ((i3 == 1) && ((insideagk[0] == 1))) {
+                            sUtil.putString("new int[] {");
+                            Convertor.inpos += 1;
+                            continue;
+                        }
+                    }
                     if (type == SAMPLESINTF) {
                         i3++;
                         insideagk[i3] = 0;
@@ -1505,6 +1533,15 @@ public class convertMame {
                         }
                     }
                     if (type == SAMPLESINTF) {
+                        i3--;
+                        if (i3 == -1) {
+                            Convertor.outbuf[(Convertor.outpos++)] = 41;
+                            Convertor.inpos += 1;
+                            type = -1;
+                            continue;
+                        }
+                    }
+                    if (type == DACINTF) {
                         i3--;
                         if (i3 == -1) {
                             Convertor.outbuf[(Convertor.outpos++)] = 41;

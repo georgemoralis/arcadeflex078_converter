@@ -277,11 +277,11 @@ public class circus
 	} };
 	#endif
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 255, 255 }
-	};
+		new int[] { 255, 255 }
+	);
 	
 	static MACHINE_DRIVER_START( circus )
 	

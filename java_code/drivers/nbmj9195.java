@@ -3891,11 +3891,11 @@ public class nbmj9195
 		{ 70 }
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2,				/* 2 channels */
-		{ 70, 100 },
-	};
+		new int[] { 70, 100 },
+	);
 	
 	
 	static MACHINE_DRIVER_START( NBMJDRV1 )

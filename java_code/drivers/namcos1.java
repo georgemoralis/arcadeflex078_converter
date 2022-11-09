@@ -1138,11 +1138,11 @@ public class namcos1
 		And,they are connected with pre-amp through active LPF.
 		LFP info : Fco = 3.3KHz , g = -12dB/oct
 	*/
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,          /* 2 channel , but they are mixed by the driver */
 		{ 100   }   /* mixing level */
-	};
+	);
 	
 	
 	static MACHINE_DRIVER_START( ns1 )

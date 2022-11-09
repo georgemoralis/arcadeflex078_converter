@@ -574,11 +574,11 @@ public class kingobox
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 25 }
-	};
+		new int[] { 25 }
+	);
 	
 	public static InterruptHandlerPtr kingofb_interrupt = new InterruptHandlerPtr() {public void handler()
 	

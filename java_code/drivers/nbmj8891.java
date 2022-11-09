@@ -2257,11 +2257,11 @@ public class nbmj8891
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,				/* 1 channels */
-		{ 100 }
-	};
+		new int[] { 100 }
+	);
 	
 	
 	

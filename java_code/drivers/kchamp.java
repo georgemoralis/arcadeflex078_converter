@@ -472,11 +472,11 @@ public class kchamp
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	}
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 50 } };
-	};
+		new int[] { 50 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( kchampvs )

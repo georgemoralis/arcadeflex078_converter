@@ -369,11 +369,11 @@ public class fantland
 		{ 0 }
 	};
 	
-	static struct DACinterface fantland_dac_interface =
-	{
+	static DACinterface fantland_dac_interface = new DACinterface
+	(
 		1,
-		{ 80 }
-	};
+		new int[] { 80 }
+	);
 	
 	static MACHINE_DRIVER_START( fantland )
 		/* basic machine hardware */

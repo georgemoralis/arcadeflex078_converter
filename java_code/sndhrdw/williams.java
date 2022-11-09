@@ -210,19 +210,19 @@ public class williams
 	
 	
 	/* DAC structure (single DAC variant) */
-	static struct DACinterface single_dac_interface =
-	{
+	static DACinterface single_dac_interface = new DACinterface
+	(
 		1,
-		{ 50 }
-	};
+		new int[] { 50 }
+	);
 	
 	
 	/* DAC structure (double DAC variant) */
-	static struct DACinterface double_dac_interface =
-	{
+	static DACinterface double_dac_interface = new DACinterface
+	(
 		2,
-		{ 50, 50 }
-	};
+		new int[] { 50, 50 }
+	);
 	
 	
 	/* CVSD structure */

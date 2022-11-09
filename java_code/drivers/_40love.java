@@ -1144,11 +1144,11 @@ public class _40love
 		{ 100 }	/* mixing level ??? */
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 20 }
-	};
+		new int[] { 20 }
+	);
 	
 	/*******************************************************************************/
 	

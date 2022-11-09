@@ -1288,11 +1288,11 @@ public class williams
 	 *
 	 *************************************/
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 50 }
-	};
+		new int[] { 50 }
+	);
 	
 	
 	static struct hc55516_interface sinistar_cvsd_interface =

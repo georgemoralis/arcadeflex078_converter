@@ -765,11 +765,11 @@ public class cojag
 	 *
 	 *************************************/
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		2,
-		{ MIXER(100, MIXER_PAN_LEFT), MIXER(100, MIXER_PAN_RIGHT) }
-	};
+		new int[] { MIXER(100, MIXER_PAN_LEFT), MIXER(100, MIXER_PAN_RIGHT) }
+	);
 	
 	
 	

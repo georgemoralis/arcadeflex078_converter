@@ -1271,11 +1271,11 @@ public class homedata
 		{ 50 }
 	};
 	
-	static struct DACinterface dac_interface =
-	{
+	static DACinterface dac_interface = new DACinterface
+	(
 		1,
-		{ 100 }
-	};
+		new int[] { 100 }
+	);
 	
 	
 	static MACHINE_DRIVER_START( mrokumei )
@@ -1328,11 +1328,11 @@ public class homedata
 	};
 	
 	
-	static struct DACinterface reikaids_dac_interface =
-	{
+	static DACinterface reikaids_dac_interface = new DACinterface
+	(
 		1,
-		{ 40 }
-	};
+		new int[] { 40 }
+	);
 	
 	
 	UPD7810_CONFIG cpu_config =
